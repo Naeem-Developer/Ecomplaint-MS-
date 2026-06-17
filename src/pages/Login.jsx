@@ -124,12 +124,7 @@ const Login = () => {
             </button>
           </form>
 
-          {/* Demo credentials hint */}
-          <div className="alert alert-info" style={{ marginTop: '24px', fontSize: '.8rem', background: 'var(--gray-50)', border: '1px dashed var(--gray-200)', color: 'var(--gray-500)' }}>
-            <div>
-              <strong>Admin:</strong> admin@ecms.com / Admin@1234
-            </div>
-          </div>
+          
         </div>
       </div>
     </div>
