@@ -206,11 +206,11 @@ const ComplaintDetail = () => {
               <p style={{ color: 'var(--gray-700)', fontSize: '.875rem', lineHeight: 1.6 }}>
                 {complaint.faculty_remark}
               </p>
-              {complaint.faculty_remark_by && (
-                <div style={{ marginTop: 8, fontSize: '.8rem', color: 'var(--gray-500)' }}>
-                  — {complaint.faculty_remark_by.name} · {complaint.faculty_remark_by.department} · {complaint.faculty_remark_by.role}
-                </div>
-              )}
+              <div style={{ marginTop: 8, fontSize: '.8rem', color: 'var(--gray-500)' }}>
+                — {complaint.faculty_remark_by?.name || complaint.assigned_name || 'Faculty'}
+                {complaint.faculty_remark_by?.role || complaint.assigned_role ? ` · ${complaint.faculty_remark_by?.role || complaint.assigned_role}` : ''}
+                {complaint.faculty_remark_by?.department ? ` · ${complaint.faculty_remark_by.department}` : ''}
+              </div>
             </div>
           )}
           {/* Faculty remark form for the assigned faculty member */}
