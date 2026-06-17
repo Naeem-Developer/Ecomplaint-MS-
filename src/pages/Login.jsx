@@ -52,8 +52,14 @@ const Login = () => {
 
         {/* Right Form Side */}
         <div className="auth-split-right">
+          <div style={{ display: 'flex', justifyContent: 'flex-start', marginBottom: '18px' }}>
+            <Link to="/" className="btn btn-ghost btn-sm" style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+              <ArrowLeft size={14} /> Home
+            </Link>
+          </div>
+
           {/* Logo */}
-          <div className="auth-logo" style={{ justifyContent: 'center', marginBottom: '32px' }}>
+          <div className="auth-logo" style={{ justifyContent: 'center', marginBottom: '28px' }}>
             <div className="auth-logo-icon">
               <img src={logo} alt="Logo" />
             </div>
@@ -61,9 +67,6 @@ const Login = () => {
           </div>
 
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-            <Link to="/" className="btn btn-ghost btn-sm" style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
-              <ArrowLeft size={14} /> Home
-            </Link>
             <span style={{ fontSize: '.9rem', color: 'var(--gray-500)' }}>Login to your account</span>
           </div>
           {error && (

@@ -4,7 +4,7 @@ import { authAPI } from '../services/api';
 import { Mail, ArrowLeft, Send } from 'lucide-react';
 import toast from 'react-hot-toast';
 import logo from '../assets/logo.png';
-import forgotPasswordIllustration from '../assets/forgot-password-illustration.svg';
+import password from '../assets/password.png';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
@@ -29,13 +29,23 @@ const ForgotPassword = () => {
 
   return (
     <div className="auth-wrapper">
-      <div className="auth-card auth-card-split">
-        <div className="auth-card-visual">
-          <img src={forgotPasswordIllustration} alt="Forgot password illustration" className="auth-illustration" />
+      <div className="auth-split-card">
+        <div className="auth-split-left">
+          <div style={{ marginBottom: '20px' }}>
+            <h2 className="auth-title" style={{ marginBottom: '4px' }}>Forgot password</h2>
+            <p className="auth-subtitle">Reset your account access securely</p>
+          </div>
+          <img src={password} alt="Forgot password illustration" />
         </div>
 
-        <div className="auth-card-content">
-          <div className="auth-logo">
+        <div className="auth-split-right">
+          <div style={{ display: 'flex', justifyContent: 'flex-start', marginBottom: '18px' }}>
+            <Link to="/" className="btn btn-ghost btn-sm" style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+              <ArrowLeft size={14} /> Home
+            </Link>
+          </div>
+
+          <div className="auth-logo" style={{ justifyContent: 'center', marginBottom: '28px' }}>
             <div className="auth-logo-icon">
               <img src={logo} alt="Logo" />
             </div>

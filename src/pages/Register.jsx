@@ -162,6 +162,15 @@ const Register = () => {
         {/* Right Form Side */}
         <div className="auth-split-right">
           {/* Logo */}
+          <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', gap: '10px', marginBottom: '18px', flexWrap: 'wrap' }}>
+            <Link to="/" className="btn btn-ghost btn-sm" style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+              <ArrowLeft size={14} /> Home
+            </Link>
+            <Link to="/login" className="btn btn-ghost btn-sm" style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+              <ArrowLeft size={14} /> Back
+            </Link>
+          </div>
+
           <div className="auth-logo" style={{ justifyContent: 'center', marginBottom: '24px' }}>
             <div className="auth-logo-icon">
               <img src={logo} alt="Logo" />
@@ -169,15 +178,7 @@ const Register = () => {
             <span className="auth-logo-text">E-Complaint MS</span>
           </div>
 
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', flexWrap: 'wrap', gap: '12px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
-              <Link to="/" className="btn btn-ghost btn-sm" style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
-                <ArrowLeft size={14} /> Home
-              </Link>
-              <Link to="/login" className="btn btn-ghost btn-sm" style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
-                <ArrowLeft size={14} /> Back
-              </Link>
-            </div>
+          <div style={{ marginBottom: '20px' }}>
             <span style={{ fontSize: '.9rem', color: 'var(--gray-500)' }}>Create your account</span>
           </div>
 
