@@ -9,6 +9,13 @@ export const AuthProvider = ({ children }) => {
 
   // ── Restore session from httpOnly cookie on mount ─────────────────────────
   useEffect(() => {
+    const loggedOut = typeof window !== 'undefined' && window.localStorage.getItem('authLoggedOut');
+    if (loggedOut) {
+      setUser(null);
+      setLoading(false);
+      return;
+    }
+
     authAPI.me()
       .then(({ data }) => setUser(data))
       .catch(() => setUser(null))   // 401 = not logged in, that's fine
@@ -19,6 +26,9 @@ export const AuthProvider = ({ children }) => {
   const login = useCallback(async (email, password) => {
     const { data } = await authAPI.login({ email, password });
     // Cookie is set server-side; we just keep the user object in React state
+    if (typeof window !== 'undefined') {
+      window.localStorage.removeItem('authLoggedOut');
+    }
     setUser(data);
     return data;
   }, []);
@@ -26,6 +36,9 @@ export const AuthProvider = ({ children }) => {
   // ── Register ──────────────────────────────────────────────────────────────
   const register = useCallback(async (regData) => {
     const { data } = await authAPI.register(regData);
+    if (typeof window !== 'undefined') {
+      window.localStorage.removeItem('authLoggedOut');
+    }
     setUser(data);
     return data;
   }, []);
@@ -37,7 +50,7 @@ export const AuthProvider = ({ children }) => {
 
     if (typeof window !== 'undefined') {
       try {
-        window.localStorage.clear();
+        window.localStorage.setItem('authLoggedOut', 'true');
         window.sessionStorage.clear();
         if (window.caches) {
           window.caches.keys().then(keys => keys.forEach(key => window.caches.delete(key)));
