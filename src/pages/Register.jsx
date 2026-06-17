@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Mail, Lock, User, Eye, EyeOff, UserPlus } from 'lucide-react';
+import { Mail, Lock, User, Eye, EyeOff, UserPlus, ArrowLeft } from 'lucide-react';
 import toast from 'react-hot-toast';
 import authIllustration from '../assets/auth-illustration.png';
 import logo from '../assets/logo.png';
@@ -167,6 +167,18 @@ const Register = () => {
               <img src={logo} alt="Logo" />
             </div>
             <span className="auth-logo-text">E-Complaint MS</span>
+          </div>
+
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', flexWrap: 'wrap', gap: '12px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+              <Link to="/" className="btn btn-ghost btn-sm" style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+                <ArrowLeft size={14} /> Home
+              </Link>
+              <Link to="/login" className="btn btn-ghost btn-sm" style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+                <ArrowLeft size={14} /> Back
+              </Link>
+            </div>
+            <span style={{ fontSize: '.9rem', color: 'var(--gray-500)' }}>Create your account</span>
           </div>
 
           {error && <div className="alert alert-error" style={{ marginBottom: '16px' }}>{error}</div>}

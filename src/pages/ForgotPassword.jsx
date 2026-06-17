@@ -4,6 +4,7 @@ import { authAPI } from '../services/api';
 import { Mail, ArrowLeft, Send } from 'lucide-react';
 import toast from 'react-hot-toast';
 import logo from '../assets/logo.png';
+import forgotPasswordIllustration from '../assets/forgot-password-illustration.svg';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
@@ -28,20 +29,24 @@ const ForgotPassword = () => {
 
   return (
     <div className="auth-wrapper">
-      <div className="auth-card">
-        <div className="auth-logo">
-          <div className="auth-logo-icon">
-            <img src={logo} alt="Logo" />
-          </div>
-          <span className="auth-logo-text">E-Complaint MS</span>
+      <div className="auth-card auth-card-split">
+        <div className="auth-card-visual">
+          <img src={forgotPasswordIllustration} alt="Forgot password illustration" className="auth-illustration" />
         </div>
+        <div className="auth-card-content">
+          <div className="auth-logo">
+            <div className="auth-logo-icon">
+              <img src={logo} alt="Logo" />
+            </div>
+            <span className="auth-logo-text">E-Complaint MS</span>
+          </div>
 
-        <h1 className="auth-title">Reset password</h1>
-        <p className="auth-subtitle">
-          {sent
-            ? 'Check your email for reset instructions.'
-            : "Enter your email and we'll PaperPlaneRight you a reset link."}
-        </p>
+          <h1 className="auth-title">Reset password</h1>
+          <p className="auth-subtitle">
+            {sent
+              ? 'Check your email for reset instructions.'
+              : "Enter your email and we'll send you a reset link."}
+          </p>
 
         {error && <div className="alert alert-error">{error}</div>}
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Mail, Lock, Eye, EyeOff, LogIn } from 'lucide-react';
+import { Mail, Lock, Eye, EyeOff, LogIn, ArrowLeft } from 'lucide-react';
 import toast from 'react-hot-toast';
 import authIllustration from '../assets/auth-illustration.png';
 import logo from '../assets/logo.png';
@@ -60,6 +60,12 @@ const Login = () => {
             <span className="auth-logo-text">E-Complaint MS</span>
           </div>
 
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+            <Link to="/" className="btn btn-ghost btn-sm" style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+              <ArrowLeft size={14} /> Home
+            </Link>
+            <span style={{ fontSize: '.9rem', color: 'var(--gray-500)' }}>Login to your account</span>
+          </div>
           {error && (
             <div className="alert alert-error" style={{ marginBottom: '20px' }}>{error}</div>
           )}
