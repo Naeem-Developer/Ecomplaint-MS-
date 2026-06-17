@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { useSearchParams } from 'react-router-dom';
 import { complaintsAPI, usersAPI, refsAPI } from '../services/api';
 import StatusBadge from '../components/StatusBadge';
@@ -303,13 +304,14 @@ const AdminComplaints = () => {
                   <tr key={c.id}>
                     <td style={{ color: 'var(--gray-400)', fontWeight: 600 }}>#{c.id}</td>
                     <td>
-                      <span style={{
-                        fontWeight: 600, color: 'var(--gray-800)',
+                      <Link to={`/complaint/${c.id}`} style={{
+                        fontWeight: 600, color: 'var(--primary-600)',
                         display: 'block', maxWidth: 200,
                         overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
+                        textDecoration: 'none'
                       }}>
                         {c.title}
-                      </span>
+                      </Link>
                     </td>
                     <td>
                       <span style={{

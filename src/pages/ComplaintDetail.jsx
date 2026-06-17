@@ -20,6 +20,8 @@ const ComplaintDetail = () => {
   const [adminRemark, setAdminRemark] = useState('');
   const [selectedDept, setSelectedDept] = useState('');
   const [selectedFaculty, setSelectedFaculty] = useState('');
+  const [facultyRemark, setFacultyRemark] = useState('');
+  const [savingFacultyRemark, setSavingFacultyRemark] = useState(false);
 
   const resolveMedia = (p) => {
     if (!p) return null;
@@ -52,6 +54,10 @@ const ComplaintDetail = () => {
     e.preventDefault();
     setUpdating(true);
     try {
+      // Only allow admin to update status when complaint is assigned
+      if (currentUser?.role === 'admin' && !complaint.assigned_name) {
+        throw new Error('Assign this complaint to a faculty member before updating status');
+      }
       await complaintsAPI.updateStatus(id, { status: newStatus, admin_remark: adminRemark });
       toast.success('Status updated successfully');
       fetchComplaint();
@@ -74,6 +80,32 @@ const ComplaintDetail = () => {
       toast.error(err.message);
     } finally {
       setAssigning(false);
+    }
+  };
+
+  const isAssignedToCurrentUser = () => {
+    if (!currentUser || !complaint) return false;
+    // Check common fields returned by backend: assigned_to id, assigned_email or assigned_name
+    if (complaint.assigned_to && currentUser.id && complaint.assigned_to === currentUser.id) return true;
+    if (complaint.assigned_email && currentUser.email && complaint.assigned_email === currentUser.email) return true;
+    if (complaint.assigned_name && currentUser.name && complaint.assigned_name === currentUser.name) return true;
+    return false;
+  };
+
+  const handleFacultyRemark = async (e) => {
+    e.preventDefault();
+    if (!facultyRemark.trim()) return toast.error('Enter a remark');
+    setSavingFacultyRemark(true);
+    try {
+      // Backend should accept faculty_remark; if not, adapt backend accordingly.
+      await complaintsAPI.updateStatus(id, { faculty_remark: facultyRemark });
+      toast.success('Remark submitted');
+      setFacultyRemark('');
+      fetchComplaint();
+    } catch (err) {
+      toast.error(err.message);
+    } finally {
+      setSavingFacultyRemark(false);
     }
   };
 
@@ -165,6 +197,38 @@ const ComplaintDetail = () => {
               </p>
             </div>
           )}
+
+          {complaint.faculty_remark && (
+            <div style={{ marginTop: '20px', padding: '16px', background: 'var(--in_progress-bg)', borderRadius: 'var(--radius-md)', border: '1px solid var(--gray-100)' }}>
+              <h3 style={{ fontWeight: 700, color: 'var(--gray-800)', marginBottom: '6px', fontSize: '.875rem' }}>
+                Faculty Remark
+              </h3>
+              <p style={{ color: 'var(--gray-700)', fontSize: '.875rem', lineHeight: 1.6 }}>
+                {complaint.faculty_remark}
+              </p>
+              {complaint.faculty_remark_by && (
+                <div style={{ marginTop: 8, fontSize: '.8rem', color: 'var(--gray-500)' }}>
+                  — {complaint.faculty_remark_by.name} · {complaint.faculty_remark_by.department} · {complaint.faculty_remark_by.role}
+                </div>
+              )}
+            </div>
+          )}
+          {/* Faculty remark form for the assigned faculty member */}
+          {currentUser?.role === 'faculty' && isAssignedToCurrentUser() && (
+            <div className="card card-pad" style={{ marginTop: 16 }}>
+              <h4 style={{ fontWeight: 700, color: 'var(--gray-800)', marginBottom: 8 }}>Add Remark</h4>
+              <form onSubmit={handleFacultyRemark}>
+                <div className="form-group">
+                  <textarea className="form-textarea" rows={4} value={facultyRemark} onChange={e => setFacultyRemark(e.target.value)} placeholder="Add your remark about this complaint" />
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                  <button type="submit" className="btn btn-primary" disabled={savingFacultyRemark}>
+                    {savingFacultyRemark ? 'Saving...' : 'Submit Remark'}
+                  </button>
+                </div>
+              </form>
+            </div>
+          )}
         </div>
 
         {isAdmin && (
@@ -188,7 +252,12 @@ const ComplaintDetail = () => {
                   <label className="form-label">Admin Remark</label>
                   <textarea className="form-textarea" rows={3} value={adminRemark} onChange={e => setAdminRemark(e.target.value)} placeholder="Add a remark..." />
                 </div>
-                <button type="submit" className="btn btn-primary w-full" disabled={updating}>
+                {currentUser?.role === 'admin' && !complaint.assigned_name && (
+                  <div style={{ color: 'var(--gray-500)', marginBottom: 8 }}>
+                    Assign this complaint to a faculty member before updating its status.
+                  </div>
+                )}
+                <button type="submit" className="btn btn-primary w-full" disabled={updating || (currentUser?.role === 'admin' && !complaint.assigned_name)}>
                   {updating ? 'Updating...' : 'Update Status'}
                 </button>
               </form>
