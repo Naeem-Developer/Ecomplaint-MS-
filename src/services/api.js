@@ -15,12 +15,33 @@ api.interceptors.response.use(
     if (!err.response) {
       return Promise.reject(new Error('Cannot connect to server. Make sure the backend is running on port 5000.'));
     }
+
+    // If the backend returns 404 for a GET on a collection endpoint (no data),
+    // treat it as an empty list instead of an error so the UI can show
+    // its empty state without showing a toast notification.
+    try {
+      const status = err.response.status;
+      const method = err.config?.method?.toLowerCase();
+      const url = err.config?.url || '';
+
+      const looksLikeCollectionGet = method === 'get' && /\/[a-zA-Z0-9_-]+s(\/|$|\?)/.test(url);
+      if (status === 404 && looksLikeCollectionGet) {
+        return Promise.resolve({ data: [], status: 200, statusText: 'OK', headers: err.response.headers, config: err.config });
+      }
+    } catch (e) {
+      // fallthrough to error normalization below
+    }
+
     const msg =
       err.response?.data?.message ||
       err.response?.data?.error   ||
       err.message                 ||
       'Something went wrong';
-    return Promise.reject(new Error(msg));
+    const e = new Error(msg);
+    // Attach original response for callers that need status/data for debugging
+    e.status = err.response?.status;
+    e.response = err.response;
+    return Promise.reject(e);
   }
 );
 

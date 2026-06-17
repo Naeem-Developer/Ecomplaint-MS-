@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { useAuth } from '../context/AuthContext';
 import { usersAPI, refsAPI } from '../services/api';
 import {
   Search, Users, Shield, BookOpen, GraduationCap,
@@ -76,8 +77,14 @@ const AddUserModal = ({ isOpen, onClose, onSuccess }) => {
 
   if (!isOpen) return null;
 
+  const { user: currentUser } = useAuth();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (currentUser?.role !== 'admin') {
+      toast.error('You are not authorized to create users');
+      return;
+    }
     if (form.role === 'faculty' && (!form.department.trim() || !form.faculty_role.trim())) {
       return toast.error('Department and position are required for faculty');
     }
@@ -89,7 +96,12 @@ const AddUserModal = ({ isOpen, onClose, onSuccess }) => {
       onSuccess();
       onClose();
     } catch (err) {
-      toast.error(err.message);
+      console.error('Create user failed', err);
+      if (err.status === 401) {
+        toast.error('Unauthorized — please login as an admin');
+      } else {
+        toast.error(err.message);
+      }
     } finally {
       setSaving(false);
     }
