@@ -33,6 +33,7 @@ const ForgotPassword = () => {
         <div className="auth-card-visual">
           <img src={forgotPasswordIllustration} alt="Forgot password illustration" className="auth-illustration" />
         </div>
+
         <div className="auth-card-content">
           <div className="auth-logo">
             <div className="auth-logo-icon">
@@ -48,41 +49,46 @@ const ForgotPassword = () => {
               : "Enter your email and we'll send you a reset link."}
           </p>
 
-        {error && <div className="alert alert-error">{error}</div>}
+          {error && <div className="alert alert-error">{error}</div>}
 
-        {sent ? (
-          <div className="alert alert-success">
-            Reset link sent! Check your inbox (and spam folder).
-          </div>
-        ) : (
-          <form onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label className="form-label">Email address</label>
-              <div className="input-wrapper">
-                <Mail size={16} className="input-icon-left" />
-                <input
-                  type="email"
-                  className="form-input input-with-icon-left"
-                  placeholder="you@example.com"
-                  value={email}
-                  onChange={e => { setEmail(e.target.value); setError(''); }}
-                  required
-                  autoFocus
-                />
-              </div>
+          {sent ? (
+            <div className="alert alert-success">
+              Reset link sent! Check your inbox (and spam folder).
             </div>
+          ) : (
+            <form onSubmit={handleSubmit}>
+              <div className="form-group">
+                <label className="form-label">Email address</label>
+                <div className="input-wrapper">
+                  <Mail size={16} className="input-icon-left" />
+                  <input
+                    type="email"
+                    className="form-input input-with-icon-left"
+                    placeholder="you@example.com"
+                    value={email}
+                    onChange={e => { setEmail(e.target.value); setError(''); }}
+                    required
+                    autoFocus
+                  />
+                </div>
+              </div>
 
-            <button type="submit" className="btn btn-primary btn-full btn-lg" disabled={loading}>
-              {loading ? 'Sending...' : <><Send size={16} /> PaperPlaneRight Reset Link</>}
-            </button>
-          </form>
-        )}
+              <button type="submit" className="btn btn-primary btn-full btn-lg" disabled={loading}>
+                {loading ? 'Sending...' : (
+                  <>
+                    <Send size={16} /> PaperPlaneRight Reset Link
+                  </>
+                )}
+              </button>
+            </form>
+          )}
 
-        <p className="auth-footer" style={{ marginTop: '20px' }}>
-          <Link to="/login" className="auth-link" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-            <ArrowLeft size={14} /> Back to Sign In
-          </Link>
-        </p>
+          <p className="auth-footer" style={{ marginTop: '20px' }}>
+            <Link to="/login" className="auth-link" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+              <ArrowLeft size={14} /> Back to Sign In
+            </Link>
+          </p>
+        </div>
       </div>
     </div>
   );
