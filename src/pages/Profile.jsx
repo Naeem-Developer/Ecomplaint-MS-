@@ -12,7 +12,15 @@ const Profile = () => {
   const [showPw, setShowPw]     = useState(false);
   const [loading, setLoading]   = useState(false);
   const [avatarFile, setAvatarFile] = useState(null);
-  const [preview, setPreview]       = useState(user?.avatar ? `http://localhost:5000${user.avatar}` : null);
+  const resolveMedia = (p) => {
+    if (!p) return null;
+    if (p.startsWith('http')) return p;
+    const api = import.meta.env.VITE_API_URL || '/api';
+    const base = api.startsWith('http') ? api.replace(/\/api\/?$/, '') : window.location.origin;
+    return `${base}${p}`;
+  };
+
+  const [preview, setPreview]       = useState(user?.avatar ? resolveMedia(user.avatar) : null);
   const fileRef = useRef();
 
   const roleColor = { admin: 'var(--rejected)', faculty: 'var(--secondary-500)', student: 'var(--primary-600)' };

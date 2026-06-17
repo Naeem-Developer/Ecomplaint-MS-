@@ -70,7 +70,13 @@ const Sidebar = ({ open, onClose }) => {
         <div className="sidebar-user">
           <div className="sidebar-user-avatar">
             {user.avatar
-              ? <img src={`http://localhost:5000${user.avatar}`} alt={user.name} />
+              ? <img src={(function(p){
+                  if (!p) return null;
+                  if (p.startsWith('http')) return p;
+                  const api = import.meta.env.VITE_API_URL || '/api';
+                  const base = api.startsWith('http') ? api.replace(/\/api\/?$/, '') : window.location.origin;
+                  return `${base}${p}`;
+                })(user.avatar)} alt={user.name} />
               : user.name?.charAt(0).toUpperCase()}
           </div>
           <div className="sidebar-user-details">

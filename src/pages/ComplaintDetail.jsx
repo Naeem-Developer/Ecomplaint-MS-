@@ -21,6 +21,14 @@ const ComplaintDetail = () => {
   const [selectedDept, setSelectedDept] = useState('');
   const [selectedFaculty, setSelectedFaculty] = useState('');
 
+  const resolveMedia = (p) => {
+    if (!p) return null;
+    if (p.startsWith('http')) return p;
+    const api = import.meta.env.VITE_API_URL || '/api';
+    const base = api.startsWith('http') ? api.replace(/\/api\/?$/, '') : window.location.origin;
+    return `${base}${p}`;
+  };
+
   const fetchComplaint = () => {
     complaintsAPI.getById(id)
       .then(r => {
@@ -123,8 +131,8 @@ const ComplaintDetail = () => {
               <h3 style={{ fontWeight: 600, color: 'var(--gray-700)', marginBottom: '10px', fontSize: '.9rem', textTransform: 'uppercase', letterSpacing: '.04em' }}>
                 Attachment
               </h3>
-              <a href={`http://localhost:5000${complaint.file_url}`} target="_blank" rel="noreferrer"
-                className="btn btn-outline btn-sm">
+                  <a href={resolveMedia(complaint.file_url)} target="_blank" rel="noreferrer"
+                    className="btn btn-outline btn-sm">
                 <Paperclip size={14} /> View Attachment
               </a>
             </div>

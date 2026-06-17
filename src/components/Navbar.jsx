@@ -19,10 +19,17 @@ const Navbar = ({ onListToggle, sidebarOpen }) => {
   const roleLabel = { admin: 'Administrator', faculty: 'Faculty', student: 'Student' };
   const roleColor = { admin: 'var(--rejected)', faculty: 'var(--secondary-500)', student: 'var(--primary-600)' };
 
-  // Avatar src: use relative /uploads path (proxied by Vite)
-  const avatarSrc = user?.avatar
-    ? (user.avatar.startsWith('http') ? user.avatar : `${user.avatar}`)
-    : null;
+  // Resolve avatar URL: if backend returned a relative path (e.g. /uploads/..),
+  // prefix it with the API origin so it works after page refresh and in prod.
+  const resolveMedia = (p) => {
+    if (!p) return null;
+    if (p.startsWith('http')) return p;
+    const api = import.meta.env.VITE_API_URL || '/api';
+    const base = api.startsWith('http') ? api.replace(/\/api\/?$/, '') : window.location.origin;
+    return `${base}${p}`;
+  };
+
+  const avatarSrc = user?.avatar ? resolveMedia(user.avatar) : null;
 
   return (
     <header className={`navbar ${user ? 'dashboard-navbar' : ''}`}>
