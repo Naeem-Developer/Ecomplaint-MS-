@@ -1,0 +1,177 @@
+.info-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: var(--gray-50);
+}
+
+.info-nav {
+  padding: 1.5rem 2.5rem;
+  background: white;
+  border-bottom: 1px solid var(--gray-100);
+  display: flex;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.info-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--primary-600);
+  font-weight: 600;
+  text-decoration: none;
+  transition: var(--transition);
+  font-size: 0.95rem;
+}
+
+.info-back-link:hover {
+  transform: translateX(-4px);
+  color: var(--primary-700);
+}
+
+.info-hero {
+  background: linear-gradient(135deg, var(--primary-600) 0%, var(--primary-800) 100%);
+  padding: 5rem 2rem;
+  color: white;
+  text-align: center;
+}
+
+.info-hero h1 {
+  font-size: 3.5rem;
+  font-weight: 900;
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+}
+
+.info-hero p {
+  font-size: 1.25rem;
+  opacity: 0.9;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.info-content-wrapper {
+  flex: 1;
+  width: 100%;
+  max-width: 900px;
+  margin: -3rem auto 5rem;
+  padding: 0 1.5rem;
+  position: relative;
+  z-index: 10;
+}
+
+.info-card {
+  background: white;
+  border-radius: var(--radius-xl);
+  padding: 4rem;
+  box-shadow: var(--shadow-xl);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.info-section {
+  margin-bottom: 3.5rem;
+}
+
+.info-section:last-child {
+  margin-bottom: 0;
+}
+
+.info-section h2 {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--gray-900);
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.info-section h2 svg {
+  color: var(--primary-500);
+}
+
+.info-section p {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: var(--gray-600);
+  margin-bottom: 1rem;
+}
+
+.info-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.info-section li {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 0.75rem;
+  color: var(--gray-600);
+}
+
+.info-section li::before {
+  content: "â€¢";
+  position: absolute;
+  left: 0;
+  color: var(--primary-500);
+  font-weight: bold;
+}
+
+/* Help Center Specific */
+.help-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.help-item {
+  background: var(--gray-50);
+  padding: 2.5rem;
+  border-radius: var(--radius-lg);
+  text-align: center;
+  transition: var(--transition);
+  border: 1px solid var(--gray-100);
+}
+
+.help-item:hover {
+  transform: translateY(-8px);
+  background: white;
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary-100);
+}
+
+.help-icon {
+  width: 64px;
+  height: 64px;
+  background: white;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  color: var(--primary-600);
+  box-shadow: var(--shadow-sm);
+}
+
+.help-item h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  color: var(--gray-900);
+}
+
+.help-item p {
+  font-size: 0.95rem;
+  color: var(--gray-500);
+  margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+  .info-hero h1 { font-size: 2.5rem; }
+  .info-card { padding: 2.5rem 1.5rem; }
+  .info-nav { padding: 1rem 1.5rem; }
+}

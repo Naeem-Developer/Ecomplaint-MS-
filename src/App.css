@@ -1,0 +1,79 @@
+/* ComplaintCard */
+.complaint-card {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.complaint-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.complaint-cat-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: .72rem;
+  font-weight: 600;
+  color: var(--primary-600);
+  background: var(--primary-50);
+  border: 1px solid var(--primary-100);
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+.complaint-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--gray-900);
+  line-height: 1.3;
+}
+.complaint-desc {
+  font-size: .875rem;
+  color: var(--gray-500);
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.complaint-remark {
+  font-size: .8rem;
+  color: var(--gray-600);
+  background: var(--gray-50);
+  border-radius: 8px;
+  padding: 8px 12px;
+  border-left: 3px solid var(--primary-400);
+}
+.complaint-meta-user {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: .8rem;
+  color: var(--gray-500);
+}
+.complaint-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 10px;
+  border-top: 1px solid var(--gray-100);
+  margin-top: 4px;
+}
+.complaint-date {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: .78rem;
+  color: var(--gray-400);
+}
+.complaint-actions { display: flex; gap: 4px; }
+
+/* Complaint grid */
+.complaints-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 18px;
+}
