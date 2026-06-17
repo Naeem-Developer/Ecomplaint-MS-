@@ -34,6 +34,18 @@ export const AuthProvider = ({ children }) => {
   const logout = useCallback(async () => {
     try { await authAPI.logout(); } catch { /* ignore */ }
     setUser(null);
+
+    if (typeof window !== 'undefined') {
+      try {
+        window.localStorage.clear();
+        window.sessionStorage.clear();
+        if (window.caches) {
+          window.caches.keys().then(keys => keys.forEach(key => window.caches.delete(key)));
+        }
+      } catch (e) {
+        console.warn('Failed to clear browser storage on logout', e);
+      }
+    }
   }, []);
 
   // ── Update local user data (after profile edit) ───────────────────────────
