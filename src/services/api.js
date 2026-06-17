@@ -2,6 +2,11 @@ import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL || '/api';
 
+// Ensure axios includes credentials (cookies) on all requests.
+// This is equivalent to fetch's `credentials: 'include'` and is required
+// for httpOnly session cookies to be sent to the backend.
+axios.defaults.withCredentials = true;
+
 const api = axios.create({
   baseURL: API_URL,
   headers: { 'Content-Type': 'application/json' },
@@ -44,6 +49,14 @@ api.interceptors.response.use(
     return Promise.reject(e);
   }
 );
+
+/*
+  Production notes for Vercel deployments:
+  - If frontend and backend are deployed on different origins (e.g. Vercel),
+    cookies must be set with `SameSite=None` and `secure: true` on the server
+    to be included by browsers.
+  - Ensure `VITE_API_URL` points to your backend, and that CORS allows credentials.
+*/
 
 /* ── Auth ─────────────────────────────────────────────────────────────────── */
 export const authAPI = {
